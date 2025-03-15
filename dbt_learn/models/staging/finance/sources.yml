@@ -1,0 +1,45 @@
+version: 2
+
+
+sources: # Fonte de dados
+  - name: finance # Dataset Finance
+    description: "Dados brutos do sistema financeiro da empresa"  # Descrição do dataset
+    schema: data_set_financial # Schema onde os dados estão armazenados
+    loader: bigquery # Tipo de banco de dados
+    loaded_at_field: data_carga
+    meta: # Metadados do dataset
+      owner: "Vinícius" # Proprietário do dataset
+    freshness: # Atualização do dataset
+      warn_after: {count: 1, period: day} # Aviso após 1 dia sem atualização
+      error_after: {count: 2, period: day} # Erro após 2 dias sem atualização
+
+    tables: # Tabelas do dataset
+      - name: dados_financeiros # Tabela com os dados financeiros
+        description: "Tabela com os lancamentos financeiros" # Descrição da tabela
+        columns: # Colunas da tabela
+          - name: banco
+            description: "Nome do Banco"
+          - name: categoria
+            description: "Categoria do lancamento"
+          - name: data
+            description: "Data do lancamento"
+          - name: destino
+            description: "Destino do lancamento"
+          - name: id
+            description: "Identificador do lancamento"
+            tests:
+              - not_null: true
+          - name: mes
+            description: "Mes do lancamento"
+          - name: nome
+            description: "Nome do lancamento"
+          - name: responsavel
+            description: "Responsavel pelo lancamento"
+          - name: status
+            description: "Status do lancamento"
+          - name: tipo
+            description: "Tipo do lancamento"
+          - name: valor
+            description: "Valor do lancamento"
+          - name: valor_real
+            description: "Valor real do lancamento"

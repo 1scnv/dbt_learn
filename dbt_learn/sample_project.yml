@@ -1,69 +1,66 @@
 # Nome e versão do projeto
-name: meu_projeto_dbt
-version: 1.0
-config-version: 2
+name: meu_projeto_dbt               # Nome lógico do projeto no dbt
+version: 1.0                        # Versão do projeto
+config-version: 2                   # Versão do esquema de configuração do dbt
 
 # Definição do perfil que conecta ao data warehouse
-profile: meu_perfil
+profile: meu_perfil                 # Nome do perfil de conexão
 
-# Caminhos de pastas onde o DBT encontrará os modelos, macros e seeds
-model-paths: ["models"]
-seed-paths: ["seeds"]
-macro-paths: ["macros"]
-snapshot-paths: ["snapshots"]
+# Caminhos de pastas onde o dbt encontrará os modelos, macros e seeds
+model-paths: ["models"]             # Diretório de modelos
+seed-paths: ["seeds"]               # Diretório de seeds (arquivos .csv)
+macro-paths: ["macros"]             # Diretório de macros (funções dbt)
+snapshot-paths: ["snapshots"]       # Diretório de snapshots
 
 # Caminho onde os artefatos de execução são armazenados
-target-path: "target"
+target-path: "target"               # Local dos artefatos gerados
+
 # Diretórios limpos com o comando dbt clean
 clean-targets:
   - "target"
   - "dbt_modules"
 
 # Configuração de logs
-log-path: "logs"
-log-format: json
+log-path: "logs"                    # Caminho para salvar logs
+log-format: json                    # Formato do log
 
 # Configurações de modelos
 models:
   meu_projeto_dbt:
-    # Configuração global de materialização
-    materialized: view
-    # Configuração para threads (paralelismo)
-    +threads: 4
-    # Persistência de documentação
+    materialized: view              # Materialização padrão para os modelos
+    +threads: 4                     # Número de threads (paralelismo)
     +persist_docs:
-      relation: true
-      columns: true
-    # Configuração de schema e materialização para diretórios específicos
+      relation: true                # Persistência de documentação em nível de objeto
+      columns: true                 # Persistência de documentação em nível de coluna
     staging:
-      schema: staging
-      materialized: table
-      +tags: ['staging']
+      schema: staging               # Schema usado pelos modelos de staging
+      materialized: table           # Materialização para staging
+      +tags: ['staging']            # Etiquetas para facilitar organização
     marts:
-      schema: marts
-      materialized: incremental
-      +threads: 2
+      schema: marts                 # Schema usado pelos modelos de marts
+      materialized: incremental     # Materialização incremental
+      +threads: 2                   # Sobrescreve o número de threads
       sap:
-        materialized: table
-        schema: custom_schema
-        tags: ['etl']
+        materialized: table         # Materialização específica para a subpasta sap
+        schema: custom_schema       # Define schema diferente para a subpasta
+        tags: ['etl']               # Etiqueta adicional
 
 # Configurações de seeds (dados estáticos)
 seeds:
   meu_projeto_dbt:
-    schema: seeds
-    quote_columns: true
+    schema: seeds                   # Schema onde as seeds serão carregadas
+    quote_columns: true             # Usa aspas nos nomes das colunas
 
 # Configurações de testes para garantir a qualidade dos dados
 tests:
   default:
-    unique: true
-    not_null: true
+    unique: true                    # Teste de unicidade aplicado por padrão
+    not_null: true                  # Teste de não-nulo aplicado por padrão
 
 # Pacotes externos
 packages:
-  - package: dbt-labs/dbt_utils
+  - package: dbt-labs/dbt_utils     # Pacote que fornece macros utilitárias
     version: 0.7.0
 
 # Debugging
-debug: true
+debug: true                         # Ativa detalhes de debug nas execuções
