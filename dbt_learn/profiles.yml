@@ -1,0 +1,10 @@
+dbt_learn:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: service-account
+      project:  driven-striker-453818-f0
+      dataset:  "{{ env_var('DBT_PROJECT_DATASET', 'dbt_dw') }}"
+      threads: 4
+      keyfile: /home/vinishow/.dbt/keys/driven-striker-453818-f0-5d22358b22f3.json
