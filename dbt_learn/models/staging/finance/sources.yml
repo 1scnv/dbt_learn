@@ -28,7 +28,8 @@ sources: # Fonte de dados
           - name: id
             description: "Identificador do lancamento"
             tests:
-              - not_null: true
+              - not_null
+              - unique
           - name: mes
             description: "Mes do lancamento"
           - name: nome
