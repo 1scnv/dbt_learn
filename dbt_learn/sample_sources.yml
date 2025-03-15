@@ -1,0 +1,44 @@
+# Este arquivo define as fontes de dados utilizadas em dbt
+
+version: 2  # Versão do esquema de configuração do dbt
+
+sources:
+  - name: raw_data_warehouse  # Nome lógico da fonte de dados
+    database: raw             # Nome do banco de dados físico
+    schema: public            # Esquema dentro do banco
+    description: "Dados brutos extraídos do sistema transacional"  # Descrição geral da fonte
+    loader: emr               # Ferramenta de carregamento dos dados
+    loaded_at_field: _loaded_at  # Campo que indica quando os dados foram carregados
+    meta:
+      contains_pii: true      # Indica se contém dados sensíveis (PII)
+      owner: "@team_data"     # Responsável pela fonte
+    tags: [ecom, raw]         # Etiquetas para classificação
+    freshness:
+      warn_after:
+        count: 2
+        period: hour          # Emite aviso se passar de 2 horas sem atualização
+      error_after:
+        count: 4
+        period: hour          # Emite erro se passar de 4 horas sem atualização
+    quoting:
+      database: false
+      schema: false
+      identifier: true
+    tables:
+      - name: orders
+        identifier: Orders_Raw
+        description: "Tabela contendo dados brutos de pedidos"
+        loaded_at_field: updated_at  # Campo de atualização
+        columns:
+          - name: id
+            description: "Identificador único do pedido"
+            tests:
+              - unique
+              - not_null
+          - name: customer_id
+            description: "Identificador do cliente"
+            tests:
+              - not_null
+              - relationships:
+                  to: ref('customers')  # Valida relação com a tabela customers
+                  field: id
