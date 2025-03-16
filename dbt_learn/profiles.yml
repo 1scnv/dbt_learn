@@ -1,10 +1,11 @@
+# Este arquivo define o perfil de conexão que o dbt usará para se comunicar com o BigQuery
 dbt_learn:
-  target: dev
+  target: dev                  # Ambiente (target) a ser executado
   outputs:
     dev:
-      type: bigquery
-      method: service-account
-      project:  driven-striker-453818-f0
-      dataset:  "{{ env_var('DBT_PROJECT_DATASET', 'dbt_dw') }}"
-      threads: 4
-      keyfile: /home/vinishow/.dbt/keys/driven-striker-453818-f0-5d22358b22f3.json
+      type: bigquery           # Tipo de banco de dados (BigQuery)
+      method: service-account  # Autenticação via service account
+      project: driven-striker-453818-f0  # Nome do projeto GCP
+      dataset: "{{ env_var('DBT_PROJECT_DATASET', 'dbt_dw') }}"  # Dataset do BigQuery
+      threads: 4               # Quantidade de threads para paralelismo
+      keyfile: /home/vinishow/.dbt/keys/driven-striker-453818-f0-5d22358b22f3.json  # Caminho para a chave de serviço
