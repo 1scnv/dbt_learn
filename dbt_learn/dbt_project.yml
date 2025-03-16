@@ -1,45 +1,41 @@
+# Nome do projeto dbt, deve ser em letras minúsculas e underscores
+name: 'dbt_learn'                 # Nome único do projeto
+version: '1.0.0'                  # Versão do projeto
 
-# Name your project! Project names should contain only lowercase characters
-# and underscores. A good package name should reflect your organization's
-# name or the intended use of these models
-name: 'dbt_learn'
-version: '1.0.0'
+# Define qual "profile" dbt vai usar
+profile: 'dbt_learn'              # Perfil de conexão configurado no profiles.yml
 
-# This setting configures which "profile" dbt uses for this project.
-profile: 'dbt_learn'
-
-# These configurations specify where dbt should look for different types of files.
-# The `model-paths` config, for example, states that models in this project can be
-# found in the "models/" directory. You probably won't need to change these!
-model-paths: ["models"]
+# Caminhos onde o dbt busca arquivos de diferentes tipos
+model-paths: ["models"]           # Diretório de modelos
 analysis-paths: ["analyses"]
 test-paths: ["tests"]
-seed-paths: ["seeds"]
-macro-paths: ["macros"]
-snapshot-paths: ["snapshots"]
+seed-paths: ["seeds"]             # Diretório de dados estáticos (seeds)
+macro-paths: ["macros"]           # Diretório de macros
+snapshot-paths: ["snapshots"]     # Diretório de snapshots
 
-clean-targets:         # directories to be removed by `dbt clean`
+clean-targets:                    # Diretórios removidos pelo comando dbt clean
   - "target"
   - "dbt_packages"
 
-
-# Configuring models
-# Full documentation: https://docs.getdbt.com/docs/configuring-models
-
-# In this example config, we tell dbt to build all models in the example/
-# directory as views. These settings can be overridden in the individual model
-# files using the `{{ config(...) }}` macro.
+# Configurações de modelos
 models:
   dbt_learn:
-  # Config indicated by + and applies to all files under models/staging/
+    # Aplicado a todos os arquivos em models/staging/
     staging:
-      schema: staging
-      materialized: table
-      tags: ['staging']
+      schema: staging             # Esquema no DW para modelos de staging
+      materialized: table         # Materialização padrão desses modelos
+      tags: ['staging']           # Etiquetas para facilitar organização
+
     intermediate:
-      materialized: ephemeral
+      materialized: ephemeral     # Modelos intermediários não criam tabela/visão
       tags: ['intermediate']
+
     marts:
-      schema: marts
-      materialized: table
+      schema: marts               # Esquema específico para modelos de marts
+      materialized: table         # Materialização em tabelas
       tags: ['marts']
+
+    seeds:
+      schema: seeds               # Esquema para armazenar dados estáticos
+      materialized: table         # Materialização no DW
+      tags: ['seeds']             # Etiqueta para classificação

@@ -1,22 +1,21 @@
-version: 2
+version: 2  # Versão do arquivo de configurações do dbt
 
-
-sources: # Fonte de dados
-  - name: finance # Dataset Finance
+sources:  # Lista de fontes de dados
+  - name: finance  # Nome do dataset
     description: "Dados brutos do sistema financeiro da empresa"  # Descrição do dataset
-    schema: data_set_financial # Schema onde os dados estão armazenados
-    loader: bigquery # Tipo de banco de dados
-    loaded_at_field: data_carga
-    meta: # Metadados do dataset
-      owner: "Vinícius" # Proprietário do dataset
-    freshness: # Atualização do dataset
-      warn_after: {count: 1, period: day} # Aviso após 1 dia sem atualização
-      error_after: {count: 2, period: day} # Erro após 2 dias sem atualização
+    schema: data_set_financial  # Schema onde os dados estão armazenados
+    loader: bigquery  # Tipo de banco de dados
+    loaded_at_field: data_carga  # Campo que indica a data de carga
+    meta:  # Metadados adicionais
+      owner: "Vinícius"  # Proprietário do dataset
+    freshness:  # Configuração de atualização
+      warn_after: {count: 1, period: day}   # Emite alerta após 1 dia sem atualização
+      error_after: {count: 2, period: day}  # Emite erro após 2 dias sem atualização
 
-    tables: # Tabelas do dataset
-      - name: dados_financeiros # Tabela com os dados financeiros
-        description: "Tabela com os lancamentos financeiros" # Descrição da tabela
-        columns: # Colunas da tabela
+    tables:  # Lista de tabelas pertencentes à fonte
+      - name: dados_financeiros  # Tabela com os lançamentos financeiros
+        description: "Tabela com os lancamentos financeiros"  # Descrição da tabela
+        columns:  # Colunas da tabela
           - name: banco
             description: "Nome do Banco"
           - name: categoria
@@ -27,8 +26,9 @@ sources: # Fonte de dados
             description: "Destino do lancamento"
           - name: id
             description: "Identificador do lancamento"
-            tests:
-              - not_null: true
+            tests:  # Testes a serem aplicados
+              - not_null # Verifica se o campo não é nulo
+              - unique  # Verifica se o campo é único
           - name: mes
             description: "Mes do lancamento"
           - name: nome
