@@ -35,7 +35,6 @@ models:
       materialized: table         # Materialização em tabelas
       tags: ['marts']
 
-    seeds:
-      schema: seeds               # Esquema para armazenar dados estáticos
-      materialized: table         # Materialização no DW
-      tags: ['seeds']             # Etiqueta para classificação
+seeds:
+  +schema: seeds                  # Esquema no DW para seeds
+  tags: ['seeds']                 # Etiqueta para classificação

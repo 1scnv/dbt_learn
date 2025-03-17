@@ -68,3 +68,15 @@ DBT é uma ferramenta poderosa e com a arquitetura correta vai com certeza mudar
 ![Arquitetura Recomendada](images/recommended_Arch.png)
 
 ![alt text](images/recommended_Arch2.png)
+
+
+## Entendendo o DBT
+
+### Sources:
+
+Descrevem as fontes de dados que o DBT utiliza para gerar e validar tabelas, proporcionando documentação e rastreabilidade sobre os dados de origem.
+
+### Seeds:
+
+São arquivos CSV estáticos usados para carregar dados pontuais ou de baixa frequencia de atualização diretamente no datawarehouse.
+São úteis para tabelas de Lookup, mapeamento de valores ou enriquecimento de dados
