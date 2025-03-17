@@ -7,11 +7,11 @@ profile: 'dbt_learn'              # Perfil de conexão configurado no profiles.y
 
 # Caminhos onde o dbt busca arquivos de diferentes tipos
 model-paths: ["models"]           # Diretório de modelos
-analysis-paths: ["analyses"]
-test-paths: ["tests"]
+analysis-paths: ["analyses"]      # Diretório de análises (remova se não houver arquivos)
+test-paths: ["tests"]             # Diretório de testes (remova se não houver arquivos)
 seed-paths: ["seeds"]             # Diretório de dados estáticos (seeds)
 macro-paths: ["macros"]           # Diretório de macros
-snapshot-paths: ["snapshots"]     # Diretório de snapshots
+snapshot-paths: ["snapshots"]     # Diretório de snapshots (remova se não houver arquivos)
 
 clean-targets:                    # Diretórios removidos pelo comando dbt clean
   - "target"

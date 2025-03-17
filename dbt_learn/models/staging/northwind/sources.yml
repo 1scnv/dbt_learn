@@ -1,0 +1,34 @@
+version: 2
+
+sources:
+  - name: northwind
+    description: "Dados do sistema de vendas Northwind"
+    schema: dbt_dw_seeds
+    loader: bigquery
+    loaded_at_field: data_carga
+    meta:
+      owner: "Vinícius"
+    freshness:
+      warn_after: {count: 1, period: day}
+      error_after: {count: 2, period: day}
+    tables:
+      - name: orders
+        description: "Tabela com os pedidos"
+        columns:
+          - name: order_id
+            tests:
+              - unique
+              - not_null
+          - name: customer_id
+          - name: employee_id
+          - name: order_date
+          - name: required_date
+          - name: shipped_date
+          - name: ship_via
+          - name: freight
+          - name: ship_name
+          - name: ship_address
+          - name: ship_city
+          - name: ship_region
+          - name: ship_postal_code
+          - name: ship_country
